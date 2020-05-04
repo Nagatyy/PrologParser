@@ -3,6 +3,13 @@ A Prolog Parser developed in Python for CMP-321
 
 The parser follows the following BNF and will parse all .txt files in the same directory.
 
+
+
+
+
+
+BNF:
+
 <program>           -> <clause-list> <query> | <query>
 <clause-list>       -> <clause> | <clause> <clause-list>
 <clause>            -> <predicate> . | <predicate> :- <predicate-list> .
@@ -24,4 +31,3 @@ The parser follows the following BNF and will parse all .txt files in the same d
 <string>            -> <character> | <character> <string>
 <character>         -> <alphanumeric> | <special>
 <special>           ->+|-|*|/|\|^|~|:|.|?| |#|$|&
- 
