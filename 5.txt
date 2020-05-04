@@ -1,0 +1,2 @@
+factorial(N,F) :- factorial(N,1,F). factorial(0,F,F).
+ factorial(N,A,F) :- A1 is N*A, ?- factorial(100,Result).
