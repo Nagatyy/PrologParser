@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2a929c7d-19fb-4ff8-867a-2f6b4fc19093" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PrologParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/PrologParser.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +67,22 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state width="1419" height="202" key="GridCell.Tab.0.bottom" timestamp="1588633095423">
+      <screen x="0" y="22" width="1440" height="832" />
+    </state>
+    <state width="1419" height="202" key="GridCell.Tab.0.bottom/0.22.1440.832@0.22.1440.832" timestamp="1588633095423" />
+    <state width="1419" height="202" key="GridCell.Tab.0.center" timestamp="1588633095422">
+      <screen x="0" y="22" width="1440" height="832" />
+    </state>
+    <state width="1419" height="202" key="GridCell.Tab.0.center/0.22.1440.832@0.22.1440.832" timestamp="1588633095422" />
+    <state width="1419" height="202" key="GridCell.Tab.0.left" timestamp="1588633095421">
+      <screen x="0" y="22" width="1440" height="832" />
+    </state>
+    <state width="1419" height="202" key="GridCell.Tab.0.left/0.22.1440.832@0.22.1440.832" timestamp="1588633095421" />
+    <state width="1419" height="202" key="GridCell.Tab.0.right" timestamp="1588633095423">
+      <screen x="0" y="22" width="1440" height="832" />
+    </state>
+    <state width="1419" height="202" key="GridCell.Tab.0.right/0.22.1440.832@0.22.1440.832" timestamp="1588633095423" />
     <state x="229" y="57" key="SettingsEditor" timestamp="1588628519412">
       <screen x="0" y="22" width="1440" height="832" />
     </state>
