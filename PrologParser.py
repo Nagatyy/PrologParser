@@ -445,7 +445,7 @@ def program_func():
 
 def driver():
     # a list holding the names of all the txt files in the current directory
-    list_of_files = sorted([file for file in os.listdir() if file[-4::] == ".txt"])
+    list_of_files = sorted([file for file in os.listdir(os.getcwd()) if file[-4::] == ".txt"])
 
     global iFile, next_token, number_of_lines, char_index, next_char, char_class, num_of_errors, list_of_errors
 
