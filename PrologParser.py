@@ -466,7 +466,10 @@ def driver():
                 lex()
                 program_func()
 
-            display_errors() if len(list_of_errors) != 0 else print("No errors found...")
+            if len(list_of_errors) != 0:
+                display_errors()
+            else:
+                print("No errors found...")
             #   resetting for next file
             next_token = -100 if file != list_of_files[-1] else EOF
             number_of_lines = 1
