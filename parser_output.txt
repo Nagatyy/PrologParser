@@ -1,0 +1,70 @@
+
+Parsing File: 1.txt
+No errors found...
+
+Parsing File: 2.txt
+No errors found...
+
+Parsing File: 3.txt
+No errors found...
+
+Parsing File: 4.txt
+1 errors found: 
+Error: Invalid Variable. line: 4 character: 36
+
+Parsing File: 5.txt
+3 errors found: 
+Error: Invalid atom line: 3 character: 27
+Error: Missing period at the end of clause line: 3 character: 29
+Error: Invalid program. Clause list must be followed by query line: 3 character: 38
+
+Parsing File: 6.txt
+48 errors found: 
+Error: Invalid term line: 1 character: 11
+Error: Invalid term line: 1 character: 15
+Error: Invalid term line: 2 character: 11
+Error: Missing Close Parenthesis in Predicate line: 2 character: 13
+Error: Invalid clause line: 2 character: 16
+Error: Invalid program. Clause list must be followed by query line: 2 character: 18
+Error: Invalid term line: 3 character: 11
+Error: Missing Close Parenthesis in Predicate line: 3 character: 18
+Error: Invalid clause line: 3 character: 22
+Error: Invalid program. Clause list must be followed by query line: 3 character: 25
+Error: Invalid term line: 3 character: 39
+Error: Missing Close Parenthesis in Predicate line: 3 character: 46
+Error: Invalid clause line: 3 character: 50
+Error: Invalid program. Clause list must be followed by query line: 3 character: 53
+Error: Invalid clause line: 5 character: 31
+Error: Invalid clause line: 6 character: 10
+Error: Invalid term line: 7 character: 8
+Error: Invalid term line: 7 character: 12
+Error: Invalid term line: 7 character: 16
+Error: Invalid term line: 7 character: 28
+Error: Missing Close Parenthesis in Predicate line: 7 character: 30
+Error: Invalid clause line: 7 character: 33
+Error: Invalid program. Clause list must be followed by query line: 7 character: 35
+Error: Invalid term line: 8 character: 8
+Error: Missing Close Parenthesis in Predicate line: 8 character: 15
+Error: Invalid clause line: 8 character: 17
+Error: Invalid program. Clause list must be followed by query line: 8 character: 20
+Error: Invalid term line: 9 character: 10
+Error: Invalid term line: 9 character: 24
+Error: Invalid term line: 10 character: 7
+Error: Missing Close Parenthesis in Predicate line: 10 character: 11
+Error: Invalid clause line: 10 character: 13
+Error: Invalid program. Clause list must be followed by query line: 10 character: 16
+Error: Invalid term line: 10 character: 57
+Error: Missing Close Parenthesis in Predicate line: 10 character: 61
+Error: Invalid clause line: 10 character: 63
+Error: Invalid program. Clause list must be followed by query line: 10 character: 66
+Error: Invalid term line: 11 character: 7
+Error: Missing Close Parenthesis in Predicate line: 11 character: 9
+Error: Invalid clause line: 11 character: 11
+Error: Invalid program. Clause list must be followed by query line: 11 character: 13
+Error: Invalid term line: 11 character: 40
+Error: Missing Close Parenthesis in Predicate line: 11 character: 42
+Error: Invalid clause line: 11 character: 44
+Error: Invalid program. Clause list must be followed by query line: 11 character: 46
+Error: Invalid term line: 12 character: 14
+Error: Missing Close Parenthesis in Predicate line: 12 character: 37
+Error: Missing period in query line: 12 character: 45
