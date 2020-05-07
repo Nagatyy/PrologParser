@@ -72,7 +72,7 @@ def lookup(character):
         char_index = -1
     elif character != '':
         add_char()
-        next_token = unknown
+        next_token = new
     else:
         add_char()
         next_token = EOF
@@ -82,9 +82,6 @@ def lookup(character):
 # used for generating ints from special characters
 def hash_special(num):
     return num + 101
-def decrypt_hash(hsh):
-    return hsh - 101
-
 def add_char():
     lexeme.append(next_char)
 
@@ -93,7 +90,7 @@ def get_char():
 
     next_char = iFile.read(1)   # to read one character
 
-    #   once we have reached EOF, len(next_char) will be 0
+    #   once we have reached EOF, next_char will be ''
     if next_char != '':
         while re.match("\s", next_char):     # while the next character is a \s (to skip)
             if next_char == "\n":
@@ -111,15 +108,10 @@ def get_char():
             char_class = digit
         else:
             char_class = unknown
-
     else:
         char_class = EOF
 
     char_index += 1
-
-
-def getNonBlank():
-    pass
 
 def lex():
     global next_token
@@ -132,8 +124,6 @@ def lex():
             while char_class == uppercase_char or char_class == lowercase_char or char_class == digit:
                 add_char()
                 get_char()
-            next_token = variable
-        # else:
         next_token = uppercase_char
     elif char_class == lowercase_char:
         add_char()
@@ -142,8 +132,6 @@ def lex():
             while char_class == uppercase_char or char_class == lowercase_char or char_class == digit:
                 add_char()
                 get_char()
-            next_token = small_atom
-        # else:
         next_token = lowercase_char
     elif char_class == digit:
         add_char()
@@ -152,8 +140,6 @@ def lex():
             while char_class == digit:
                 add_char()
                 get_char()
-            next_token = numeral
-        # else:
         next_token = digit
     elif char_class == unknown:
         lookup(next_char)
@@ -164,7 +150,6 @@ def lex():
     #print("Next token is: " + str(next_token) + " Next Lexeme is: " + str(lexeme))
 
     return next_token
-
 ############## End of Lexical Analysis ###############
 # syntax analysis
 
@@ -177,6 +162,7 @@ def special_func():
     else:
         list_of_errors.append(("Invalid Special Character", number_of_lines, char_index))
         num_of_errors += 1
+        get_char()
         lex()
 
 # an alphanumeric or a lowercase char or an uppercase char or a digit
@@ -189,6 +175,7 @@ def alphanumeric_func():
     else:
         num_of_errors += 1
         list_of_errors.append(("Invalid Alphanumeric Character", number_of_lines, char_index))
+        get_char()
         lex()
 
 # a character is an alphanumeric or a special
@@ -203,6 +190,7 @@ def character_func():
     else:
         num_of_errors += 1
         list_of_errors.append(("Invalid Character", number_of_lines, char_index))
+        get_char()
         lex()
 # a string is a character followed optionally by a string (rec)
 def string_func():
@@ -226,6 +214,7 @@ def numeral_func():
     else:
         num_of_errors += 1
         list_of_errors.append(("Invalid Numeral", number_of_lines, char_index))
+        get_char()
         lex()
 # a character-list is an alphanumeric followed by 0 or more character-lists
 def character_list_func():
@@ -240,16 +229,23 @@ def character_list_func():
 # a variable is an uppercase character followed by 0 or more character-lists
 def variable_func():
   #  print("Enter <variable>")
-    global num_of_errors, list_of_errors
+    global num_of_errors, list_of_errors, next_token
 
     if next_token == uppercase_char:        # uppercase character
         lex()
         if next_token == uppercase_char or next_token == lowercase_char or next_token == digit:
             # followed optionally by a character-list
             character_list_func()
+        elif next_token == dash:
+            num_of_errors += 1
+            list_of_errors.append(("Invalid Variable.", number_of_lines, char_index))
+            get_char()
+            lex()
+
     else:
         num_of_errors += 1
         list_of_errors.append(("Invalid Variable. Must begin with uppercase", number_of_lines, char_index))
+        get_char()
         lex()
 
 # a small atom is a lowercase character followed by 0 or more character-lists
@@ -265,6 +261,7 @@ def small_atom_func():
     else:
         num_of_errors += 1
         list_of_errors.append(("Invalid small-atom. Must begin with lowercase", number_of_lines, char_index))
+        get_char()
         lex()
 
 # an atom is small atom or a ' <string> '
@@ -282,10 +279,12 @@ def atom_func():
         else:
             num_of_errors += 1
             list_of_errors.append(("String missing a ' ", number_of_lines, char_index))
+            get_char()
             lex()
     else:
         num_of_errors += 1
         list_of_errors.append(("Invalid atom", number_of_lines, char_index))
+        get_char()
         lex()
 
 # a term is a numeral or a variable or a structure or a atom
@@ -303,6 +302,7 @@ def term_func():
     else:
         num_of_errors += 1
         list_of_errors.append(("Invalid term", number_of_lines, char_index))
+        get_char()
         lex()
 
 # a term-list is a term followed by 0 or more ,<term-list>
@@ -311,7 +311,6 @@ def term_list_func():
     global num_of_errors, list_of_errors
 
     term_func()
-
     if next_token == comma:
         lex()
         term_list_func()
@@ -323,7 +322,6 @@ def predicate_func():
     global num_of_errors, list_of_errors
 
     atom_func()
-
     if next_token == open_parenthesis:
         lex()
         term_list_func()
@@ -332,6 +330,7 @@ def predicate_func():
         else:
             num_of_errors += 1
             list_of_errors.append(("Missing Close Parenthesis in Predicate", number_of_lines, char_index))
+            get_char()
             lex()
 
 # a predicate-list consists of a predicate followed by 0 or more , <predicate-lists>
@@ -359,14 +358,17 @@ def query_func():
             else:
                 num_of_errors += 1
                 list_of_errors.append(("Missing period in query", number_of_lines, char_index))
+                get_char()
                 lex()
         else:
             num_of_errors += 1
             list_of_errors.append(("Missing - in query", number_of_lines, char_index))
+            get_char()
             lex()
     else:
         num_of_errors += 1
         list_of_errors.append(("Missing ? in query", number_of_lines, char_index))
+        get_char()
         lex()
 
 # a structure consists of an atom followed by '(' followed by a term-list followed by ')'
@@ -383,8 +385,8 @@ def structure_func():
         else:
             num_of_errors += 1
             list_of_errors.append(("Missing Close Parenthesis", number_of_lines, char_index))
+            get_char()
             lex()
-
 
 #   a clause consists of either 1. a predicate followed by a period
 #                            or 2. a predicate followed by a :- followed
@@ -406,15 +408,18 @@ def clause_func():
             else:
                 num_of_errors += 1
                 list_of_errors.append(("Missing period at the end of clause", number_of_lines, char_index))
+                get_char()
                 lex()
         else:
             num_of_errors += 1
             list_of_errors.append(("Missing colon in clause", number_of_lines, char_index))
+            get_char()
             lex()
 
     else:
         num_of_errors += 1
         list_of_errors.append(("Invalid clause", number_of_lines, char_index))
+        get_char()
         lex()
 
 #   a clause-list consists of a clause followed by 0 or more clause-lists
@@ -440,12 +445,14 @@ def program_func():
         else:
             num_of_errors += 1
             list_of_errors.append(("Invalid program. Clause list must be followed by query", number_of_lines, char_index))
+            get_char()
             lex()
-
-
+##################### End of Parser #####################
 def driver():
     # a list holding the names of all the txt files in the current directory
-    list_of_files = sorted([file for file in os.listdir(os.getcwd()) if file[-4::] == ".txt"])
+    list_of_files = sorted([file for file in os.listdir(os.getcwd()) if file[-4::] == ".txt"\
+                            and file[:] != "parser_output.txt"])
+    oFile = open("parser_output.txt", "w")
 
     global iFile, next_token, number_of_lines, char_index, next_char, char_class, num_of_errors, list_of_errors
 
@@ -454,22 +461,23 @@ def driver():
 
     for file in list_of_files:
         try:
-            iFile = open(file, "a")
-            iFile.write("\n")       # error otherwise
-            iFile.close()
-
             iFile = open(file, "r")
-            print("Parsing File: " + file)
+
+            print("\nParsing File: " + file)
+            oFile.write("\nParsing File: " + file + "\n")
+
             get_char()
 
-            while next_token != EOF:
+            while char_class != EOF:
                 lex()
                 program_func()
 
             if len(list_of_errors) != 0:
-                display_errors()
+                display_errors(oFile)
             else:
                 print("No errors found...")
+                oFile.write("No errors found...\n")
+
             #   resetting for next file
             next_token = -100 if file != list_of_files[-1] else EOF
             number_of_lines = 1
@@ -479,15 +487,18 @@ def driver():
 
         except FileNotFoundError:
             print("Could not open the file: " + file)
+            oFile.write("Could not open the file: " + file + "\n")
 
     iFile.close()
 
-def display_errors():
+def display_errors(oFile):
     global list_of_errors
-    print( str(len(list_of_errors)) +" errors found:")
+    print(str(num_of_errors) +" errors found:")
+    oFile.write(str(num_of_errors) +" errors found: \n")
+
     for error in list_of_errors:
         print("Error: " + error[0] + " line: " + str(error[1]) + " character: " + str(error[2]))
-
+        oFile.write("Error: " + error[0] + " line: " + str(error[1]) + " character: " + str(error[2]) + "\n")
 
 ########### start of script ###########
 driver()
